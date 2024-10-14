@@ -1,13 +1,12 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
-</template>
 <script>
+import Page from '@/components/domain/login/index.vue'
 export default {
-  name: 'loginPage'
+  name: 'loginPage',
+  components: {
+    Page
+  }
 }
 </script>
-<style lang="scss" scoped>
-
-</style>
+<template>
+  <Page/>
+</template>
