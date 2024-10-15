@@ -13,7 +13,8 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: { requiresAuth: true, title: 'Список заявок' }
       }
     ]
   },
@@ -26,7 +27,8 @@ const routes = [
         name: 'login',
         component: function () {
           return import('../views/login.vue')
-        }
+        },
+        meta: { title: 'Вход' }
       }
     ]
   }
@@ -37,5 +39,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | MDO`;
+  const token = localStorage.getItem('token');
+  if(to.name == 'login' && token) {
+    next({name: 'home'})
+  } else {
+      if (to.meta.requiresAuth && !token) {
+          next({ name: 'login' })
+      } else {
+          next()
+      }
+  }
+});
 
 export default router

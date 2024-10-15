@@ -4,8 +4,9 @@ import router from './router'
 import store from './store'
 import './main.css'
 import './assets/css/fonts.css'
+import api from './plugins/axios'
 Vue.config.productionTip = false
-
+Vue.prototype.$axios = api;
 new Vue({
   router,
   store,
