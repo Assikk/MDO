@@ -5,7 +5,7 @@
       <h2 class="header">
         Авторизация
       </h2>
-      <div class="body">
+      <div class="body" @keypress.enter="auth">
         <div class="inputs">
             <Phone id="authPhone" label="Логин или Телефон" v-model="form.username"
             :error="(v$.form.username.$dirty && v$.form.username.required.$invalid) || (v$.form.username.$dirty && v$.form.username.numeric.$invalid)">
