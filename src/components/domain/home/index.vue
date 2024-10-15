@@ -10,22 +10,55 @@
                 </Button>
             </div>
             <div class="filters">
-                <Search/>
-                <div>
-                    right
-                </div>
+                <Search placeholder="Поиск (№ заявки, название)" v-model="filter.search" @enter="get_appeals(filter)"/>
+                <Select placeholder="Дом" id="searchHome" iconLocation="98"
+                :list="premises" valueList="id" textList="title"
+                v-model="filter.premise_id" @input="get_appeals(filter)"></Select>
             </div>
         </div>
     </section>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
 import Button from '@/components/ui/buttons/default.vue'
 import Search from '@/components/ui/inputs/search.vue'
+import Select from '@/components/ui/selects/default.vue'
 export default {
     name: 'HomeComponent',
     components: {
         Button,
-        Search
+        Search,
+        Select
+    },
+    computed: {
+        ...mapState({
+            premises: state => state.premises.premises
+        })
+    },
+    data() {
+        return {
+            filter: {
+                page: 1,
+                page_size: 10,
+                search: null,
+                premise_id: null
+            }
+        }
+    },
+    methods: {
+        ...mapActions({
+            get_premises: 'premises/get_premises',
+            get_appeals: 'appeals/get_appeals'
+        }),
+        async init() {
+            await Promise.all([
+                this.get_premises(),
+                this.get_appeals(this.filter)
+            ])
+        }
+    },
+    mounted() {
+        this.init()
     }
 }
 </script>
