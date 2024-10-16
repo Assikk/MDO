@@ -1,13 +1,18 @@
 <template>
-    <div class="search">
-        <input type="text" :placeholder="placeholder"
+<div>
+    <div class="date"
+    :class="[
+    {'error': error}
+    ]">
+        <input type="date" :placeholder="placeholder"
         :value="value"
         @input="$emit('input', $event.target.value)"
         @keypress.enter="$emit('enter')">
-        <svg width="24" height="24" fill="#999">
-            <use xlink:href="#search"/>
-        </svg>
     </div>
+    <div class="error-text">
+        <slot  name="error"/>
+    </div>
+</div>
 </template>
 <script>
 export default {
@@ -16,17 +21,18 @@ export default {
         placeholder: {
             type: String
         },
-        value: {}
+        value: {},
+        error: {
+            type: Boolean,
+            default: false
+        },
     }
 }
 </script>
 <style lang="scss" scoped>
-.search {
-    height: 57px;
+.date {
     border-bottom: 1px solid #ccc;
-    padding-right: 12px;
-    display: flex;
-    align-items: center;
+    padding: 18px 12px 18px 0;
     font-size: 14px;
     line-height: 20px;
     font-family: 'Roboto', sans-serif;
@@ -35,11 +41,19 @@ export default {
         width: 100%;
         outline: none;
         border: none;
-    }
-    svg {
-        min-width: 24px;
-        min-height: 24px;
+        color: #999;
     }
 }
-
+input::placeholder {
+    color: #999;
+}
+.error {
+    border-bottom: 1px solid #ff0000;
+}
+.error-text {
+    margin-top: 4px;
+    color: #ff0000;
+    font-size: 14px;
+    line-height: 16px;
+}
 </style>

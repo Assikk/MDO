@@ -5,8 +5,10 @@ import store from './store'
 import './main.css'
 import './assets/css/fonts.css'
 import api from './plugins/axios'
+import changeForm from './plugins/changeForm'
 Vue.config.productionTip = false
 Vue.prototype.$axios = api;
+Vue.use(changeForm)
 new Vue({
   router,
   store,

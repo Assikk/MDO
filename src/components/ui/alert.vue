@@ -37,7 +37,7 @@ export default {
   width: max-content;
   padding: 8px 16px;
   border-radius: 8px;
-  z-index: 10;
+  z-index: 100;
   background: #FFFBEB;
   color: #92400E;
   font-weight: 500;

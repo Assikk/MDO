@@ -5,7 +5,7 @@
         </h1>
         <div class="page-table">
             <div class="add">
-                <Button>
+                <Button @click="show_addModal(true)">
                     Создать
                 </Button>
             </div>
@@ -22,7 +22,8 @@
                 <template #body>
                     <tr v-for="item in appeals" :key="item.id">
                         <td>
-                            <span class="number_appeal">
+                            <span class="number_appeal"
+                            @click="showEditModal(item.id)">
                                 {{item.number}}
                             </span>
                         </td>
@@ -48,28 +49,38 @@
                 </template>
             </Table>
         </div>
+        <transition-group name="fade">
+           <AddModal v-if="showAddModal" key="add"/>
+           <EditModal v-if="isShowEditModal" key="edit" :id="appealId"/>
+        </transition-group>
     </section>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import Button from '@/components/ui/buttons/default.vue'
 import Search from '@/components/ui/inputs/search.vue'
 import Select from '@/components/ui/selects/default.vue'
 import Table from '@/components/ui/table.vue'
+import AddModal from './modals/add.vue'
+import EditModal from './modals/edit.vue'
 export default {
     name: 'HomeComponent',
     components: {
         Button,
         Search,
         Select,
-        Table
+        Table,
+        AddModal,
+        EditModal
     },
     computed: {
         ...mapState({
             premises: state => state.premises.premises,
             appeals: state => state.appeals.appeals,
             totalPages: state => state.appeals.totalPages,
-            total: state => state.appeals.total
+            total: state => state.appeals.total,
+            showAddModal: state => state.appeals.showAddModal,
+            isShowEditModal: state => state.appeals.showEditModal
         })
     },
     data() {
@@ -118,9 +129,14 @@ export default {
                 }
             ],
             loadingTable: true,
+            appealId: null
         }
     },
     methods: {
+        ...mapMutations({
+            show_addModal: 'appeals/SHOW_ADDMODAL',
+            show_editModal: 'appeals/SHOW_EDITMODAL'
+        }),
         ...mapActions({
             get_premises: 'premises/get_premises',
             get_appeals: 'appeals/get_appeals'
@@ -140,6 +156,10 @@ export default {
         async changePage(page) {
             this.filter.page = page
             await this.get_appeals(this.filter)
+        },
+        showEditModal(id) {
+            this.appealId = id
+            this.show_editModal(true)
         }
     },
     mounted() {
@@ -184,4 +204,5 @@ export default {
             }
         }
     }
+    
 </style>

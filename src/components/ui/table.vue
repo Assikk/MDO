@@ -132,9 +132,6 @@ export default {
             span {
                 font-weight: 700;
             }
-            select {
-                width: 90px;
-            }
         }
     }
 }

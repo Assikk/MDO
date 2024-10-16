@@ -4,6 +4,7 @@ import alert from './alert'
 import auth from './auth'
 import premises from './premises'
 import appeals from './appeals'
+import apartments from './apartments'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,6 +17,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    alert, auth, premises, appeals
+    alert, auth, premises, appeals, apartments
   }
 })
