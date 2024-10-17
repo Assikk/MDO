@@ -4,7 +4,7 @@
     <div class="form">
       <div class="header">
         <h2>
-            Создание заявки
+            Заявка {{form.due_date ? `№ ${appeal.number} (от ${form.due_date})` : ''}}
         </h2>
         <p>
             Новая
